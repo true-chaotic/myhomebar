@@ -7,7 +7,7 @@
   "scripts": {
     "start": "parcel",
     "build": "parcel build",
-    "lint": "eslint",
+    "lint": "eslint src/**/*.tsx src/**/*.ts",
     "test": "echo \"Error: no test specified\" && exit 1"
   },
   "author": "Samokhin Alex",
