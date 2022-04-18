@@ -35,7 +35,6 @@ export default function Container({ children }: Props): JSX.Element {
             </Typography>
           </Toolbar>
         </AppBar>
-        <br />
         {children}
       </Box>
     </ThemeProvider>

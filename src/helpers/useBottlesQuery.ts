@@ -1,9 +1,9 @@
 import { useLiveQuery } from 'dexie-react-hooks';
 import { useMemo } from 'react';
 import { db } from '../db';
-import { BottleDisplay } from '../types';
+import { Bottle } from '../types';
 
-export default function useBottlesQuery(): BottleDisplay[] {
+export default function useBottlesQuery(): Bottle[] {
   const queryResult = useLiveQuery(
     async () => {
       const bottleTypes = await db.types.toArray();
