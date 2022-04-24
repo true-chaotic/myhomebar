@@ -1,42 +1,37 @@
-import { ListSubheader } from '@mui/material';
 import * as React from 'react';
-import List from '@mui/material/List';
-import ListItem from '@mui/material/ListItem';
-import ListItemText from '@mui/material/ListItemText';
-import ListItemAvatar from '@mui/material/ListItemAvatar';
-import Avatar from '@mui/material/Avatar';
+import { useState } from 'react';
+import Box from '@mui/material/Box';
+import Tab from '@mui/material/Tab';
+import TabContext from '@mui/lab/TabContext';
+import TabList from '@mui/lab/TabList';
+import TabPanel from '@mui/lab/TabPanel';
 import Container from './components/Container';
-import useCocktailsQuery from './helpers/useCocktailsQuery';
+import Bottles from './components/Bottles';
+import Cocktails from './components/Cocktails';
+import Logs from './components/Logs';
+import { TabName } from './consts';
 
 function App(): JSX.Element {
-  const cocktails = useCocktailsQuery();
+  const [tab, setTab] = useState<TabName>(TabName.Cocktails);
+
+  const handleChange = (event: React.SyntheticEvent, newTab: TabName) => {
+    setTab(newTab);
+  };
 
   return (
     <Container>
-      <List
-        sx={{ width: '100%', bgcolor: 'background.paper' }}
-        aria-labelledby="cocktails-subheader"
-        subheader={(
-          <ListSubheader component="h2" id="cocktails-subheader">
-            Cocktails
-          </ListSubheader>
-            )}
-      >
-
-        {cocktails.map(({ id, name, ingredients }) => (
-          <ListItem
-            key={id}
-          >
-            <ListItemAvatar>
-              <Avatar />
-            </ListItemAvatar>
-            <ListItemText
-              primary={name}
-              secondary={ingredients.map(({ amount, type }) => `${type}: ${amount}ml`).join(', ')}
-            />
-          </ListItem>
-        ))}
-      </List>
+      <TabContext value={tab}>
+        <Box sx={{ borderBottom: 1, borderColor: 'divider' }}>
+          <TabList onChange={handleChange} aria-label="Options">
+            <Tab label={TabName.Bottles} value={TabName.Bottles} />
+            <Tab label={TabName.Cocktails} value={TabName.Cocktails} />
+            <Tab label={TabName.Logs} value={TabName.Logs} />
+          </TabList>
+        </Box>
+        <TabPanel value={TabName.Bottles}><Bottles /></TabPanel>
+        <TabPanel value={TabName.Cocktails}><Cocktails /></TabPanel>
+        <TabPanel value={TabName.Logs}><Logs /></TabPanel>
+      </TabContext>
     </Container>
   );
 }

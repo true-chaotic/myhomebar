@@ -1,7 +1,10 @@
 import Dexie, { Table } from 'dexie';
 import COCKTAILS from './presets/cocktails';
 import TYPES from './presets/types';
-import { BottleRecord, CocktailRecord, Type } from './types';
+import { AppAction, Initiator } from './consts';
+import {
+  BottleRecord, CocktailRecord, LogEntry, Type,
+} from './types';
 
 export class Bar extends Dexie {
   bottles!: Table<BottleRecord>;
@@ -10,6 +13,8 @@ export class Bar extends Dexie {
 
   cocktails!: Table<CocktailRecord>;
 
+  logs!: Table<LogEntry>;
+
   constructor() {
     super('bar');
 
@@ -17,11 +22,17 @@ export class Bar extends Dexie {
       bottles: 'id, name, typeId',
       types: 'id, name',
       cocktails: 'id, name',
+      logs: '++id',
     });
 
     this.on('populate', () => {
       this.types.bulkAdd(TYPES);
       this.cocktails.bulkAdd(COCKTAILS);
+      this.logs.bulkAdd([{
+        timestamp: Date.now(),
+        initiator: Initiator.Application,
+        action: AppAction.Initialized,
+      }]);
     });
   }
 }
