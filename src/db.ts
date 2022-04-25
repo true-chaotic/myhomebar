@@ -1,10 +1,8 @@
 import Dexie, { Table } from 'dexie';
+import { AppAction, Initiator, UserAction } from './consts';
 import COCKTAILS from './presets/cocktails';
 import TYPES from './presets/types';
-import { AppAction, Initiator } from './consts';
-import {
-  BottleRecord, CocktailRecord, LogEntry, Type,
-} from './types';
+import { BottleRecord, CocktailRecord, LogEntry, Type, } from './types';
 
 export class Bar extends Dexie {
   bottles!: Table<BottleRecord>;

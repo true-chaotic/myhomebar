@@ -6,6 +6,7 @@ import ListItem from '@mui/material/ListItem';
 import ListItemIcon from '@mui/material/ListItemIcon';
 import ListItemText from '@mui/material/ListItemText';
 import { AppAction, Initiator, UserAction } from '../consts';
+import useLogsQuery from '../helpers/useLogsQuery';
 import { LogEntry } from '../types';
 
 const getIcon = ({ initiator }: LogEntry) => {
@@ -44,18 +45,7 @@ const getText = ({ initiator, action }: LogEntry): string => {
 };
 
 export default function Logs(): JSX.Element {
-  const logs: LogEntry[] = [{
-    id: 2,
-    timestamp: Date.now(),
-    initiator: Initiator.User,
-    action: UserAction.AddedCocktail,
-    object: '1',
-  }, {
-    id: 1,
-    timestamp: Date.now(),
-    initiator: Initiator.Application,
-    action: AppAction.Initialized,
-  }];
+  const logs = useLogsQuery();
 
   return (
     <List
@@ -68,7 +58,7 @@ export default function Logs(): JSX.Element {
           </ListItemIcon>
           <ListItemText
             primary={getText(entry)}
-            secondary={new Date(entry.timestamp).toUTCString()}
+            secondary={new Date(entry.timestamp).toLocaleString()}
           />
         </ListItem>
       ))}
