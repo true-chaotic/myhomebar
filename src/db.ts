@@ -1,5 +1,5 @@
 import Dexie, { Table } from 'dexie';
-import { AppAction, Initiator, UserAction } from './consts';
+import { AppAction, Initiator } from './consts';
 import COCKTAILS from './presets/cocktails';
 import TYPES from './presets/types';
 import { BottleRecord, CocktailRecord, LogEntry, Type, } from './types';

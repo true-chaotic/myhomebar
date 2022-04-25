@@ -11,36 +11,57 @@ import Cocktails from './components/Cocktails';
 import Logs from './components/Logs';
 import FloatingActionButtons from './components/FloatingActionButtons';
 import { TabName } from './consts';
+import useAddCocktailPrompt from './modalHooks/useAddCocktailPrompt';
+import { db } from './db';
+import { COFFEE_LIQUOR, IRISH_CREAM, ORANGE_LIQUOR } from './presets/types';
 
 function App(): JSX.Element {
   const [tab, setTab] = useState<TabName>(TabName.Cocktails);
+  const [addCocktailPopup, addCocktailWithDialog] = useAddCocktailPrompt();
 
   const handleChange = (event: React.SyntheticEvent, newTab: TabName) => {
     setTab(newTab);
   };
 
   const onFABClick = (clickForTab: TabName) => {
-    switch (clickForTab) {
-      case TabName.Bottles: {
-        const newBottleName = prompt('New bottle name');
+    (async function onClick() {
+      switch (clickForTab) {
+        case TabName.Cocktails: {
+          const name = await addCocktailWithDialog();
 
-        if (newBottleName) {
-          console.log({ newBottleName });
+          if (name) {
+            await db.cocktails.add({
+              name,
+              id: (Date.now()).toString(),
+              ingredients: [{
+                typeId: COFFEE_LIQUOR,
+                amount: 20,
+              }, {
+                typeId: IRISH_CREAM,
+                amount: 20,
+              }, {
+                typeId: ORANGE_LIQUOR,
+                amount: 20,
+              }],
+            });
+          }
+
+          break;
         }
+        /*
+        case TabName.Bottles: {
+          const newBottleName = await addCocktailWithDialog();
 
-        break;
-      }
-      case TabName.Cocktails: {
-        const newCocktailName = prompt('New cocktail name');
+          if (newBottleName) {
+            console.log({ newBottleName });
+          }
 
-        if (newCocktailName) {
-          console.log({ newCocktailName });
+          break;
         }
-
-        break;
+         */
+        default:
       }
-      default:
-    }
+    }());
   };
 
   return (
@@ -57,6 +78,7 @@ function App(): JSX.Element {
         <TabPanel value={TabName.Cocktails}><Cocktails /></TabPanel>
         <TabPanel value={TabName.Logs}><Logs /></TabPanel>
       </TabContext>
+      {addCocktailPopup}
       <FloatingActionButtons tab={tab} onFABClick={onFABClick} />
     </Container>
   );

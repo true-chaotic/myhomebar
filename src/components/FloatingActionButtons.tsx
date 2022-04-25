@@ -6,19 +6,19 @@ import { useTheme } from '@mui/material/styles';
 import { TabName } from '../consts';
 
 const fabStyle = {
-  position: 'absolute',
+  position: 'fixed',
   bottom: 16,
   right: 16,
 };
 
 const fabs = [
-  {
-    color: 'primary' as 'primary',
-    sx: fabStyle,
-    icon: <AddIcon />,
-    label: 'Add bottle',
-    tab: TabName.Bottles,
-  },
+  // {
+  //   color: 'primary' as 'primary',
+  //   sx: fabStyle,
+  //   icon: <AddIcon />,
+  //   label: 'Add bottle',
+  //   tab: TabName.Bottles,
+  // },
   {
     color: 'primary' as 'primary',
     sx: fabStyle,
