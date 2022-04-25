@@ -9,6 +9,7 @@ import Container from './components/Container';
 import Bottles from './components/Bottles';
 import Cocktails from './components/Cocktails';
 import Logs from './components/Logs';
+import FloatingActionButtons from './components/FloatingActionButtons';
 import { TabName } from './consts';
 
 function App(): JSX.Element {
@@ -16,6 +17,10 @@ function App(): JSX.Element {
 
   const handleChange = (event: React.SyntheticEvent, newTab: TabName) => {
     setTab(newTab);
+  };
+
+  const onFABClick = (clickForTab: TabName) => {
+    console.log({ clickForTab });
   };
 
   return (
@@ -32,6 +37,7 @@ function App(): JSX.Element {
         <TabPanel value={TabName.Cocktails}><Cocktails /></TabPanel>
         <TabPanel value={TabName.Logs}><Logs /></TabPanel>
       </TabContext>
+      <FloatingActionButtons tab={tab} onFABClick={onFABClick} />
     </Container>
   );
 }
