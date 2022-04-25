@@ -20,7 +20,27 @@ function App(): JSX.Element {
   };
 
   const onFABClick = (clickForTab: TabName) => {
-    console.log({ clickForTab });
+    switch (clickForTab) {
+      case TabName.Bottles: {
+        const newBottleName = prompt('New bottle name');
+
+        if (newBottleName) {
+          console.log({ newBottleName });
+        }
+
+        break;
+      }
+      case TabName.Cocktails: {
+        const newCocktailName = prompt('New cocktail name');
+
+        if (newCocktailName) {
+          console.log({ newCocktailName });
+        }
+
+        break;
+      }
+      default:
+    }
   };
 
   return (
