@@ -1,19 +1,22 @@
 import * as React from 'react';
-import { useState } from 'react';
-import Box from '@mui/material/Box';
-import Tab from '@mui/material/Tab';
+import { useCallback, useState } from 'react';
 import TabContext from '@mui/lab/TabContext';
 import TabList from '@mui/lab/TabList';
 import TabPanel from '@mui/lab/TabPanel';
-import Container from './components/Container';
+import Box from '@mui/material/Box';
+import Tab from '@mui/material/Tab';
 import Bottles from './components/Bottles';
 import Cocktails from './components/Cocktails';
-import Logs from './components/Logs';
+import Container from './components/Container';
 import FloatingActionButtons from './components/FloatingActionButtons';
+import Logs from './components/Logs';
 import { TabName } from './consts';
+import addCocktail from './helpers/addCocktail';
 import useAddCocktailPrompt from './modalHooks/useAddCocktailPrompt';
-import { db } from './db';
-import { COFFEE_LIQUOR, IRISH_CREAM, ORANGE_LIQUOR } from './presets/types';
+
+const boxStyle = { borderBottom: 1, borderColor: 'divider' };
+
+const onAddBottleClick = () => {};
 
 function App(): JSX.Element {
   const [tab, setTab] = useState<TabName>(TabName.Cocktails);
@@ -23,51 +26,18 @@ function App(): JSX.Element {
     setTab(newTab);
   };
 
-  const onFABClick = (clickForTab: TabName) => {
-    (async function onClick() {
-      switch (clickForTab) {
-        case TabName.Cocktails: {
-          const name = await addCocktailWithDialog();
+  const onAddCocktailClick = useCallback(async () => {
+    const name = await addCocktailWithDialog();
 
-          if (name) {
-            await db.cocktails.add({
-              name,
-              id: (Date.now()).toString(),
-              ingredients: [{
-                typeId: COFFEE_LIQUOR,
-                amount: 20,
-              }, {
-                typeId: IRISH_CREAM,
-                amount: 20,
-              }, {
-                typeId: ORANGE_LIQUOR,
-                amount: 20,
-              }],
-            });
-          }
-
-          break;
-        }
-        /*
-        case TabName.Bottles: {
-          const newBottleName = await addCocktailWithDialog();
-
-          if (newBottleName) {
-            console.log({ newBottleName });
-          }
-
-          break;
-        }
-         */
-        default:
-      }
-    }());
-  };
+    if (name) {
+      await addCocktail(name);
+    }
+  }, [addCocktailWithDialog]);
 
   return (
     <Container>
       <TabContext value={tab}>
-        <Box sx={{ borderBottom: 1, borderColor: 'divider' }}>
+        <Box sx={boxStyle}>
           <TabList onChange={handleChange} aria-label="Options">
             <Tab label={TabName.Bottles} value={TabName.Bottles} />
             <Tab label={TabName.Cocktails} value={TabName.Cocktails} />
@@ -79,7 +49,11 @@ function App(): JSX.Element {
         <TabPanel value={TabName.Logs}><Logs /></TabPanel>
       </TabContext>
       {addCocktailPopup}
-      <FloatingActionButtons tab={tab} onFABClick={onFABClick} />
+      <FloatingActionButtons
+        tab={tab}
+        onAddCocktailClick={onAddCocktailClick}
+        onAddBottleClick={onAddBottleClick}
+      />
     </Container>
   );
 }

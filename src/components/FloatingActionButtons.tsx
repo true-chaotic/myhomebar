@@ -1,3 +1,4 @@
+import { useCallback } from 'react';
 import * as React from 'react';
 import AddIcon from '@mui/icons-material/Add';
 import Fab from '@mui/material/Fab';
@@ -30,16 +31,32 @@ const fabs = [
 
 interface Props {
   tab: TabName,
-  onFABClick: ((tab: TabName) => void)
+  onAddCocktailClick: () => void,
+  onAddBottleClick: () => void,
 }
 
-export default function FloatingActionButtons({ tab, onFABClick }: Props): JSX.Element {
+export default function FloatingActionButtons({
+  tab,
+  onAddCocktailClick,
+  onAddBottleClick,
+}: Props): JSX.Element {
   const theme = useTheme();
 
   const transitionDuration = {
     enter: theme.transitions.duration.enteringScreen,
     exit: theme.transitions.duration.leavingScreen,
   };
+
+  const onFABClick = useCallback(() => {
+    switch (tab) {
+      case TabName.Bottles:
+        return onAddBottleClick();
+      case TabName.Cocktails:
+        return onAddCocktailClick();
+      default:
+        return undefined;
+    }
+  }, [tab, onAddCocktailClick, onAddBottleClick]);
 
   return (
     <>
@@ -57,7 +74,7 @@ export default function FloatingActionButtons({ tab, onFABClick }: Props): JSX.E
             sx={fab.sx}
             aria-label={fab.label}
             color={fab.color}
-            onClick={() => onFABClick(fab.tab)}
+            onClick={onFABClick}
           >
             {fab.icon}
           </Fab>
