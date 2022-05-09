@@ -1,21 +1,30 @@
 import * as React from 'react';
-import { useState } from 'react';
+import { useState, useCallback } from 'react';
 import Button from '@mui/material/Button';
 import TextField from '@mui/material/TextField';
 import Dialog from '@mui/material/Dialog';
 import DialogActions from '@mui/material/DialogActions';
 import DialogContent from '@mui/material/DialogContent';
 import DialogTitle from '@mui/material/DialogTitle';
+import { COFFEE_LIQUOR, IRISH_CREAM, ORANGE_LIQUOR } from '../presets/types';
+import { NewCocktailRecord } from '../types';
 
-export default function useAddCocktailPrompt(): [JSX.Element, () => Promise<string | undefined>] {
-  const [handleClose, setHandleClose] = useState<(name?: string) => void | undefined>(undefined);
+type Result = NewCocktailRecord | null;
+type PopupAndResultPromise = [JSX.Element, () => Promise<Result>];
+
+export default function useAddCocktailPrompt(): PopupAndResultPromise {
+  const [
+    handleClose,
+    setHandleClose,
+  ] = useState<((cocktail: Result) => void) | undefined>(undefined);
+
   const [cocktailName, setCocktailName] = useState<string>('');
 
-  const formPrompt = () => new Promise((resolve) => {
-    setHandleClose(() => (name) => {
-      resolve(name);
+  const formPrompt = () => new Promise<Result>((resolve) => {
+    setHandleClose(() => (cocktail: Result) => {
+      resolve(cocktail);
 
-      if (name) {
+      if (cocktail) {
         setCocktailName('');
       }
 
@@ -23,12 +32,30 @@ export default function useAddCocktailPrompt(): [JSX.Element, () => Promise<stri
     });
   });
 
+  const setResult = useCallback((cocktail: Result) => {
+    if (handleClose) {
+      handleClose(cocktail);
+    }
+  }, [handleClose]);
+
   const popup = (
-    <Dialog open={Boolean(handleClose)} onClose={() => handleClose(undefined)}>
+    <Dialog open={Boolean(handleClose)} onClose={() => setResult(null)}>
       <form onSubmit={(event) => {
         event.preventDefault();
 
-        handleClose(cocktailName);
+        setResult({
+          name: cocktailName,
+          ingredients: [{
+            typeId: COFFEE_LIQUOR,
+            amount: 20,
+          }, {
+            typeId: IRISH_CREAM,
+            amount: 20,
+          }, {
+            typeId: ORANGE_LIQUOR,
+            amount: 20,
+          }],
+        });
       }}
       >
         <DialogTitle>Add new cocktail</DialogTitle>
@@ -45,7 +72,7 @@ export default function useAddCocktailPrompt(): [JSX.Element, () => Promise<stri
           />
         </DialogContent>
         <DialogActions>
-          <Button type="button" onClick={() => handleClose(undefined)}>Cancel</Button>
+          <Button type="button" onClick={() => setResult(null)}>Cancel</Button>
           <Button type="submit">Add</Button>
         </DialogActions>
       </form>

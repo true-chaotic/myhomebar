@@ -22,6 +22,5 @@ export default function useBottlesQuery(): Bottle[] {
     },
   );
 
-  // Dexie's useLiveQuery type is wrong, it should include undefined
   return useMemo(() => queryResult || [], [queryResult]);
 }

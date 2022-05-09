@@ -1,24 +1,14 @@
 import { Initiator, UserAction } from '../consts';
 import { db } from '../db';
-import { COFFEE_LIQUOR, IRISH_CREAM, ORANGE_LIQUOR } from '../presets/types';
+import { NewCocktailRecord } from '../types';
 
-export default async function addCocktail(name: string) {
+export default async function addCocktail(cocktail: NewCocktailRecord) {
   return db.transaction('rw', db.cocktails, db.logs, async () => {
     const id = (Date.now()).toString();
 
     await db.cocktails.add({
-      name,
+      ...cocktail,
       id,
-      ingredients: [{
-        typeId: COFFEE_LIQUOR,
-        amount: 20,
-      }, {
-        typeId: IRISH_CREAM,
-        amount: 20,
-      }, {
-        typeId: ORANGE_LIQUOR,
-        amount: 20,
-      }],
     });
 
     await db.logs.add({

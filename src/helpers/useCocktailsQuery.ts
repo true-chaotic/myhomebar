@@ -29,6 +29,5 @@ export default function useCocktailsQuery(): Cocktail[] {
     },
   );
 
-  // Dexie's useLiveQuery type is wrong, it should include undefined
   return useMemo(() => queryResult || [], [queryResult]);
 }

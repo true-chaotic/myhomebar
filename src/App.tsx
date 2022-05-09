@@ -27,10 +27,10 @@ function App(): JSX.Element {
   };
 
   const onAddCocktailClick = useCallback(async () => {
-    const name = await addCocktailWithDialog();
+    const cocktail = await addCocktailWithDialog();
 
-    if (name) {
-      await addCocktail(name);
+    if (cocktail) {
+      await addCocktail(cocktail);
     }
   }, [addCocktailWithDialog]);
 

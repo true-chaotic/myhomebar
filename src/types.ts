@@ -60,6 +60,8 @@ export interface CocktailRecord {
   ingredients: NonEmptyArray<IngredientRecord>
 }
 
+export type NewCocktailRecord = Omit<CocktailRecord, 'id'>;
+
 export interface Cocktail {
   id: string;
   name: string;
