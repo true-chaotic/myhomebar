@@ -1,5 +1,10 @@
 {
   "compilerOptions": {
-    "strict": true
+    "strict": true,
+    "rootDir": "./src",
+    "esModuleInterop": true,
+    "lib": ["es6", "dom"],
+    "jsx": "react",
+    "noUncheckedIndexedAccess": true
   }
 }
