@@ -12,9 +12,9 @@ const ROOT_ID = 'root';
 let container = document.getElementById(ROOT_ID);
 
 if (!container) {
-    container = document.createElement('div');
-    container.id = ROOT_ID
-    document.body.appendChild(container);
+  container = document.createElement('div');
+  container.id = ROOT_ID;
+  document.body.appendChild(container);
 }
 
 const root = createRoot(container);

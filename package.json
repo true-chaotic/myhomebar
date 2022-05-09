@@ -8,7 +8,7 @@
     "start": "parcel",
     "build": "parcel build",
     "lint": "eslint src/**/*.tsx src/**/*.ts",
-    "check": "tsc --noEmit --project .tsconfig.json",
+    "check": "tsc --noEmit",
     "test": "echo \"Error: no test specified\" && exit 1"
   },
   "author": "Samokhin Alex",
