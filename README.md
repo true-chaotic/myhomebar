@@ -3,7 +3,6 @@
 ```
 npm install
 npm start
-
 ```
 
 ![lint and typecheck](https://github.com/true-chaotic/myhomebar/actions/workflows/node.js.yml/badge.svg)
