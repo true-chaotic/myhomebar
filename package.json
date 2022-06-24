@@ -9,7 +9,7 @@
     "build": "parcel build",
     "lint": "eslint src/**/*.tsx src/**/*.ts",
     "check": "tsc --noEmit",
-    "test": "echo \"Error: no test specified\" && exit 1"
+    "test": "jest"
   },
   "author": "Samokhin Alex",
   "license": "AGPL-3.0",
@@ -25,7 +25,9 @@
     "eslint-plugin-jsx-a11y": "^6.5.1",
     "eslint-plugin-react": "^7.28.0",
     "eslint-plugin-react-hooks": "^4.3.0",
-    "parcel": "^2.4.1"
+    "jest": "^28.1.1",
+    "parcel": "^2.4.1",
+    "selenium-webdriver": "^4.2.0"
   },
   "dependencies": {
     "@emotion/react": "^11.9.0",
