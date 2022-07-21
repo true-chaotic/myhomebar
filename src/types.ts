@@ -15,6 +15,8 @@ export interface BottleRecord {
   };
 }
 
+export type NewBottleRecord = Omit<BottleRecord, 'id'>;
+
 interface BaseLogEntry {
   id?: number,
   timestamp: number,

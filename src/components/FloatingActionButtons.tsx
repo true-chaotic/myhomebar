@@ -13,13 +13,13 @@ const fabStyle = {
 };
 
 const fabs = [
-  // {
-  //   color: 'primary' as 'primary',
-  //   sx: fabStyle,
-  //   icon: <AddIcon />,
-  //   label: 'Add bottle',
-  //   tab: TabName.Bottles,
-  // },
+  {
+    color: 'primary' as 'primary',
+    sx: fabStyle,
+    icon: <AddIcon />,
+    label: 'Add bottle',
+    tab: TabName.Bottles,
+  },
   {
     color: 'primary' as 'primary',
     sx: fabStyle,
