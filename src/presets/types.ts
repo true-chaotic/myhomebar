@@ -6,13 +6,13 @@ export const ORANGE_LIQUOR = 'orange-liquor';
 
 const TYPES: Type[] = [{
   id: IRISH_CREAM,
-  name: 'Orange liquor',
+  name: 'Irish cream',
 }, {
   id: COFFEE_LIQUOR,
   name: 'Coffee liquor',
 }, {
   id: ORANGE_LIQUOR,
-  name: 'Irish cream',
+  name: 'Orange Liquor',
 }];
 
 export default TYPES;

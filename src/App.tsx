@@ -12,15 +12,16 @@ import FloatingActionButtons from './components/FloatingActionButtons';
 import Logs from './components/Logs';
 import { TabName } from './consts';
 import addCocktail from './helpers/addCocktail';
+import addBottle from './helpers/addBottle';
 import useAddCocktailPrompt from './modalHooks/useAddCocktailPrompt';
+import useAddBottlePrompt from './modalHooks/useAddBottlePrompt';
 
 const boxStyle = { borderBottom: 1, borderColor: 'divider' };
-
-const onAddBottleClick = () => {};
 
 function App(): JSX.Element {
   const [tab, setTab] = useState<TabName>(TabName.Cocktails);
   const [addCocktailPopup, addCocktailWithDialog] = useAddCocktailPrompt();
+  const [addBottlePopup, addBottleWithDialog] = useAddBottlePrompt();
 
   const handleChange = (event: React.SyntheticEvent, newTab: TabName) => {
     setTab(newTab);
@@ -33,6 +34,14 @@ function App(): JSX.Element {
       await addCocktail(cocktail);
     }
   }, [addCocktailWithDialog]);
+
+  const onAddBottleClick = useCallback(async () => {
+    const bottle = await addBottleWithDialog();
+
+    if (bottle) {
+      await addBottle(bottle);
+    }
+  }, [addBottleWithDialog]);
 
   return (
     <Container>
@@ -49,6 +58,7 @@ function App(): JSX.Element {
         <TabPanel value={TabName.Logs}><Logs /></TabPanel>
       </TabContext>
       {addCocktailPopup}
+      {addBottlePopup}
       <FloatingActionButtons
         tab={tab}
         onAddCocktailClick={onAddCocktailClick}
