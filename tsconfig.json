@@ -1,7 +1,7 @@
 {
   "compilerOptions": {
     "strict": true,
-    "rootDir": "./src",
+    "rootDirs": ["./src", "./cypress"],
     "esModuleInterop": true,
     "lib": ["es6", "dom"],
     "jsx": "react",
