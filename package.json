@@ -7,11 +7,10 @@
   "scripts": {
     "start": "parcel",
     "build": "parcel build",
-    "lint": "eslint src/**/*.tsx src/**/*.ts",
+    "lint": "eslint src/**/*.tsx src/**/*.ts cypress/**/*.ts",
     "check": "tsc --noEmit",
     "test": "echo \"Error: no test specified\" && exit 1",
     "cypress:open": "cypress open"
-    
   },
   "author": "Samokhin Alex",
   "license": "AGPL-3.0",
