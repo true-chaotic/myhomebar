@@ -1,6 +1,6 @@
 describe('Application', () => {
   it('starts with Cocktails page', () => {
-    cy.visit('http://localhost:1234');
+    cy.visit('/');
     cy.contains('Cocktails');
     cy.contains('B-52');
   });
@@ -13,7 +13,7 @@ describe('Application', () => {
 
 describe('Add cocktail', () => {
   it('add Lemonade to the page', () => {
-    cy.visit('http://localhost:1234');
+    cy.visit('/');
     cy.contains('Cocktails');
     cy.get('[aria-label="Add cocktail"]').click();
     cy.get('#name').type('Lemonade');
@@ -24,7 +24,7 @@ describe('Add cocktail', () => {
 
 describe('Add bottle', () => {
   it('add Lemon juice to the page', () => {
-    cy.visit('http://localhost:1234');
+    cy.visit('/');
     cy.contains('Bottles').click();
     cy.get('[aria-label="Add bottle"]').click();
     cy.get('#name').type('Lemon juice');
