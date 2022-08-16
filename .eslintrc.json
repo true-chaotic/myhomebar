@@ -2,7 +2,8 @@
   "extends": [
     "airbnb",
     "airbnb/hooks",
-    "airbnb-typescript"
+    "airbnb-typescript",
+    "plugin:cypress/recommended"
   ],
   "parserOptions": {
     "project": "./tsconfig.json"
