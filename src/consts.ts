@@ -1,7 +1,7 @@
 export enum TabName {
   Cocktails = 'Cocktails',
   Bottles = 'Bottles',
-  Logs = 'Logs',
+  Logs = 'Log',
 }
 
 export enum Initiator {
