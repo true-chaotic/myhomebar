@@ -12,6 +12,20 @@ Record available drinks in your bar and cocktails that you can make
 npm install
 npm start
 ```
+<<<<<<< Updated upstream
+=======
+
+## Running cypress tests
+- open the console and go to the project folder
+- start a local server `npm start`
+- follow the link you received to make sure that you have access to the server
+- open a new console window and go to the project folder
+- launch cypress: `npm run cypress:open`
+- on an open page cypress select a button "E2E Testing"
+- select the browser
+- on an open page select "spec.cy.ts"
+- tests are running
+>>>>>>> Stashed changes
 ---
 
 Source of browser features data for builds is caniuse.com (see [caniuse-lite](https://www.npmjs.com/package/caniuse-lite#user-content-license))
