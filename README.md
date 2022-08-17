@@ -7,13 +7,12 @@
 Record available drinks in your bar and cocktails that you can make
 
 
-## How to start 
+## How to start
 ```
 npm install
 npm start
 ```
-<<<<<<< Updated upstream
-=======
+
 
 ## Running cypress tests
 - open the console and go to the project folder
@@ -25,7 +24,7 @@ npm start
 - select the browser
 - on an open page select "spec.cy.ts"
 - tests are running
->>>>>>> Stashed changes
+
 ---
 
 Source of browser features data for builds is caniuse.com (see [caniuse-lite](https://www.npmjs.com/package/caniuse-lite#user-content-license))
