@@ -12,7 +12,11 @@ it('starts with Cocktails page', () => {
 
 it('add Lemonade to the page', () => {
   cy.visit('/');
-  cy.contains('Cocktails');
+
+  cy.contains('Cocktails')
+    .invoke('attr', 'aria-selected')
+    .should('eq', 'true');
+
   cy.get('[aria-label="Add cocktail"]').click();
   cy.get('#name').type('Lemonade');
   cy.get('form').submit();
@@ -20,10 +24,35 @@ it('add Lemonade to the page', () => {
 });
 
 it('add Lemon juice to the page', () => {
+  const bottleName = 'Lemon juice';
+
   cy.visit('/');
-  cy.contains('Bottles').click();
+
+  cy.contains('Bottles').click()
+    .invoke('attr', 'aria-selected')
+    .should('eq', 'true');
+
   cy.get('[aria-label="Add bottle"]').click();
-  cy.get('#name').type('Lemon juice');
+
+  cy.contains('Add new bottle');
+  cy.contains('Bottle name');
+  cy.contains('Type');
+  cy.contains('Total volume');
+  cy.contains('Current volume');
+
+  cy.get('#name').type(bottleName);
   cy.get('form').submit();
-  cy.contains('Lemon juice');
+
+  cy.contains('Add new bottle').should('not.exist');
+  cy.contains(bottleName);
+
+  cy.contains('Logs').click()
+    .invoke('attr', 'aria-selected')
+    .should('eq', 'true');
+  cy.contains('User added a bottle');
+
+  cy.visit('/');
+
+  cy.contains('Bottles').click();
+  cy.contains(bottleName);
 });
