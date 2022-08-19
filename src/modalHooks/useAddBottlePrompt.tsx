@@ -92,7 +92,7 @@ export default function useBottlePrompt(): PopupAndResultPromise {
           </FormControl>
           <FormControl fullWidth>
             <InputLabel variant="standard" htmlFor="total-volume">
-              Total volume
+              Total
             </InputLabel>
             <NativeSelect
               value={totalVolume}
