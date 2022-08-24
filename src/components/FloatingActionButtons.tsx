@@ -19,6 +19,7 @@ const fabs = [
     icon: <AddIcon />,
     label: 'Add bottle',
     tab: TabName.Bottles,
+    cy: 'add-bottle-button',
   },
   {
     color: 'primary' as 'primary',
@@ -26,13 +27,14 @@ const fabs = [
     icon: <AddIcon />,
     label: 'Add cocktail',
     tab: TabName.Cocktails,
+    cy: 'add-cocktail-button',
   },
 ];
 
 interface Props {
-  tab: TabName,
-  onAddCocktailClick: () => void,
-  onAddBottleClick: () => void,
+  tab: TabName;
+  onAddCocktailClick: () => void;
+  onAddBottleClick: () => void;
 }
 
 export default function FloatingActionButtons({
@@ -66,11 +68,14 @@ export default function FloatingActionButtons({
           in={tab === fab.tab}
           timeout={transitionDuration}
           style={{
-            transitionDelay: `${tab === fab.tab ? transitionDuration.exit : 0}ms`,
+            transitionDelay: `${
+              tab === fab.tab ? transitionDuration.exit : 0
+            }ms`,
           }}
           unmountOnExit
         >
           <Fab
+            data-cy={fab.cy}
             sx={fab.sx}
             aria-label={fab.label}
             color={fab.color}
