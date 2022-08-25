@@ -118,12 +118,12 @@ export default function useBottlePrompt(): PopupAndResultPromise {
           <TextField
             autoFocus
             margin="dense"
-            id="name"
+            id="current-volume"
             label="Current volume"
             fullWidth
             variant="standard"
             value={currentVolume}
-            inputProps={{ inputMode: 'numeric' }}
+            inputProps={{ inputMode: 'numeric', name: 'current-volume' }}
             onChange={({ target: { value } }) => {
               const filteredValue = value.replace(/[^0-9]/gi, '');
               const validValue = filteredValue === '' ? 0 : Math.min(totalVolume, Number(filteredValue));
