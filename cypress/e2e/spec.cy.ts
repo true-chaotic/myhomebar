@@ -65,6 +65,7 @@ it('changing the volume of the bottle', () => {
     .should('eq', 'true');
 
   cy.get('[data-cy="add-bottle-button"]').click();
+  // value synchronization
   cy.get('[name="total-volume"]').select('1000').should('have.value', '1000');
   cy.get('[name="current-volume"]').should('have.value', '1000');
 
@@ -73,4 +74,22 @@ it('changing the volume of the bottle', () => {
 
   cy.get('[name="total-volume"]').select('500').should('have.value', '500');
   cy.get('[name="current-volume"]').should('have.value', '500');
+
+  cy.get('[name="total-volume"]').select('750').should('have.value', '750');
+  cy.get('[name="current-volume"]').should('have.value', '750');
+
+  cy.get('[name="total-volume"]').select('1000').should('have.value', '1000');
+  cy.get('[name="current-volume"]').should('have.value', '1000');
+
+  // value asynchronization
+  cy.get('[name="total-volume"]').select('500').should('have.value', '500');
+  cy.get('[name="current-volume"]').should('have.value', '500');
+  cy.get('[name="current-volume"]').type('{backspace}{backspace}{backspace}');
+  cy.get('[name="current-volume"]').should('have.value', '0');
+  cy.get('[name="current-volume"]').type('400');
+  cy.get('[name="current-volume"]').should('have.value', '400');
+  cy.get('[name="total-volume"]').select('750').should('have.value', '750');
+  cy.get('[name="current-volume"]').should('have.value', '400');
+  cy.get('[name="current-volume"]').type('4000');
+  cy.get('[name="current-volume"]').should('have.value', '750');
 });
