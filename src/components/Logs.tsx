@@ -7,6 +7,7 @@ import ListItemIcon from '@mui/material/ListItemIcon';
 import ListItemText from '@mui/material/ListItemText';
 import { AppAction, Initiator, UserAction } from '../consts';
 import useLogsQuery from '../helpers/useLogsQuery';
+import assertUnreachable from '../helpers/assertUnreachable';
 import { LogEntry } from '../types';
 
 const getIcon = ({ initiator }: LogEntry) => {
@@ -21,26 +22,28 @@ const getIcon = ({ initiator }: LogEntry) => {
   return null;
 };
 
-const getText = ({ initiator, action }: LogEntry): string => {
+const getText = (entry: LogEntry): string => {
+  const { initiator, action } = entry;
+
   switch (initiator) {
     case Initiator.Application:
       switch (action) {
         case AppAction.Initialized:
           return 'Application initialized';
         default:
-          return `Application performed unknown action: ${action}`;
+          return assertUnreachable(action);
       }
     case Initiator.User:
       switch (action) {
         case UserAction.AddedBottle:
-          return 'User added a bottle';
+          return `User added a bottle with id ${entry.object}`;
         case UserAction.AddedCocktail:
-          return 'User added a cocktail';
+          return `User added a cocktail with id ${entry.object}`;
         default:
           return `User performed unknown action: ${action}`;
       }
     default:
-      return `Unknown initiator ${initiator} performed unknown action ${action}`;
+      return assertUnreachable(initiator);
   }
 };
 
