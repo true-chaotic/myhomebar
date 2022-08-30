@@ -17,7 +17,7 @@ it('add Lemonade to the page', () => {
     .invoke('attr', 'aria-selected')
     .should('eq', 'true');
 
-  cy.get('[aria-label="Add cocktail"]').click();
+  cy.get('[data-cy="add-cocktail-button"]').click();
   cy.get('#name').type('Lemonade');
   cy.get('form').submit();
   cy.contains('Lemonade');
@@ -32,7 +32,7 @@ it('add Lemon juice to the page', () => {
     .invoke('attr', 'aria-selected')
     .should('eq', 'true');
 
-  cy.get('[aria-label="Add bottle"]').click();
+  cy.get('[data-cy="add-bottle-button"]').click();
 
   cy.contains('Add new bottle');
   cy.contains('Bottle name');
@@ -55,4 +55,47 @@ it('add Lemon juice to the page', () => {
 
   cy.contains('Bottles').click();
   cy.contains(bottleName);
+});
+
+it('changing the volume of the bottle', () => {
+  cy.visit('/');
+
+  cy.contains('Bottles').click()
+    .invoke('attr', 'aria-selected')
+    .should('eq', 'true');
+
+  cy.get('[data-cy="add-bottle-button"]').click();
+
+  cy.get('[name="total-volume"]').as('total');
+  cy.get('[name="current-volume"]').as('current');
+
+  // value synchronization
+  cy.get('@total').select('1000').should('have.value', '1000');
+  cy.get('@current').should('have.value', '1000');
+
+  cy.get('@total').select('750').should('have.value', '750');
+  cy.get('@current').should('have.value', '750');
+
+  cy.get('@total').select('500').should('have.value', '500');
+  cy.get('@current').should('have.value', '500');
+
+  cy.get('@total').select('750').should('have.value', '750');
+  cy.get('@current').should('have.value', '750');
+
+  cy.get('@total').select('1000').should('have.value', '1000');
+  cy.get('@current').should('have.value', '1000');
+
+  // value asynchronization
+  cy.get('@total').select('500').should('have.value', '500');
+  cy.get('@current').should('have.value', '500');
+
+  cy.get('@current').type('{backspace}{backspace}{backspace}');
+  cy.get('@current').should('have.value', '0');
+  cy.get('@current').type('400');
+  cy.get('@current').should('have.value', '400');
+
+  cy.get('@total').select('750').should('have.value', '750');
+  cy.get('@current').should('have.value', '400');
+  cy.get('@current').type('4000');
+  cy.get('@current').should('have.value', '750');
 });
