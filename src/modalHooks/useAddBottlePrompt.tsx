@@ -69,6 +69,7 @@ export default function useBottlePrompt(): PopupAndResultPromise {
             fullWidth
             variant="standard"
             value={bottleName}
+            inputProps={{ name: 'bottle-name', 'data-cy': 'bottle-name' }}
             onChange={(event) => { setBottleName(event.target.value); }}
           />
           <FormControl fullWidth>
@@ -133,7 +134,7 @@ export default function useBottlePrompt(): PopupAndResultPromise {
           />
         </DialogContent>
         <DialogActions>
-          <Button type="button" onClick={() => setResult(null)}>Cancel</Button>
+          <Button data-cy="cancel-button-bottle" type="button" onClick={() => setResult(null)}>Cancel</Button>
           <Button type="submit">Add</Button>
         </DialogActions>
       </form>
