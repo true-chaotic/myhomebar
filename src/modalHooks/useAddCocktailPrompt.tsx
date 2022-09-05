@@ -68,11 +68,12 @@ export default function useAddCocktailPrompt(): PopupAndResultPromise {
             fullWidth
             variant="standard"
             value={cocktailName}
+            inputProps={{ inputMode: 'text', name: 'cocktail-name', 'data-cy': 'cocktail-name' }}
             onChange={(event) => { setCocktailName(event.target.value); }}
           />
         </DialogContent>
         <DialogActions>
-          <Button type="button" onClick={() => setResult(null)}>Cancel</Button>
+          <Button data-cy="cancel-button-cocktail" type="button" onClick={() => setResult(null)}>Cancel</Button>
           <Button type="submit">Add</Button>
         </DialogActions>
       </form>
