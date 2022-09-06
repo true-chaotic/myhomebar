@@ -3,62 +3,59 @@ import { useMemo } from 'react';
 import { UserAction } from '../consts';
 import { db } from '../db';
 import {
-  BottleRecord,
-  CocktailRecord,
   LogEntry,
   UserBottleLogEntryPopulated,
   UserCocktailLogEntryPopulated,
 } from '../types';
+import getMapById from './getMapById';
+
+const getLogsIds = (logs: LogEntry[]) => {
+  const bottleLogsIds = new Set<string>();
+  const cocktailsLogsIds = new Set<string>();
+
+  logs.forEach((entry) => {
+    switch (entry.action) {
+      case UserAction.AddedBottle:
+      case UserAction.RemovedBottle: {
+        bottleLogsIds.add(entry.object);
+        break;
+      }
+      case UserAction.AddedCocktail:
+      case UserAction.RemovedCocktail: {
+        cocktailsLogsIds.add(entry.object);
+        break;
+      }
+      default:
+    }
+  });
+
+  return { bottleLogsIds, cocktailsLogsIds };
+};
 
 export default function useLogsQuery(): LogEntry[] {
   const queryResult = useLiveQuery(
     async () => {
       const logs = await db.logs.toArray();
 
-      const bottleLogsIds = new Set<string>();
-      const cocktailsLogsIds = new Set<string>();
-
-      logs.forEach((entry) => {
-        switch (entry.action) {
-          case UserAction.AddedBottle:
-          case UserAction.RemovedBottle: {
-            bottleLogsIds.add(entry.object);
-            break;
-          }
-          case UserAction.AddedCocktail:
-          case UserAction.RemovedCocktail: {
-            cocktailsLogsIds.add(entry.object);
-            break;
-          }
-          default:
-        }
-      });
+      const { bottleLogsIds, cocktailsLogsIds } = getLogsIds(logs);
 
       const bottles = await db.bottles
         .where('id').anyOf(Array.from(bottleLogsIds))
         .toArray();
 
-      const bottleMap = bottles.reduce((result, bottle) => {
-        result.set(bottle.id, bottle);
-
-        return result;
-      }, new Map<string, BottleRecord>());
+      const bottlesMap = getMapById(bottles);
 
       const cocktails = await db.cocktails
         .where('id').anyOf(Array.from(cocktailsLogsIds))
         .toArray();
 
-      const cocktailsMap = cocktails.reduce((result, bottle) => {
-        result.set(bottle.id, bottle);
-
-        return result;
-      }, new Map<string, CocktailRecord>());
+      const cocktailsMap = getMapById(cocktails);
 
       return logs.map<LogEntry>((entry) => {
         switch (entry.action) {
           case UserAction.AddedBottle:
           case UserAction.RemovedBottle: {
-            const bottle = bottleMap.get(entry.object);
+            const bottle = bottlesMap.get(entry.object);
 
             if (!bottle) {
               return entry;
