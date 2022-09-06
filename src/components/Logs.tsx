@@ -36,11 +36,27 @@ const getText = (entry: LogEntry): string => {
     case Initiator.User:
       switch (action) {
         case UserAction.AddedBottle:
+          if ('bottle' in entry) {
+            return `User added a bottle named ${entry.bottle.name}`;
+          }
           return `User added a bottle with id ${entry.object}`;
+        case UserAction.RemovedBottle:
+          if ('bottle' in entry) {
+            return `User removed a bottle named ${entry.bottle.name}`;
+          }
+          return `User removed a bottle with id ${entry.object}`;
         case UserAction.AddedCocktail:
+          if ('cocktail' in entry) {
+            return `User added a cocktail named ${entry.cocktail.name}`;
+          }
           return `User added a cocktail with id ${entry.object}`;
+        case UserAction.RemovedCocktail:
+          if ('cocktail' in entry) {
+            return `User removed a cocktail named ${entry.cocktail.name}`;
+          }
+          return `User removed a cocktail with id ${entry.object}`;
         default:
-          return `User performed unknown action: ${action}`;
+          return assertUnreachable(action);
       }
     default:
       return assertUnreachable(initiator);

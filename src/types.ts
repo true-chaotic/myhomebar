@@ -39,6 +39,10 @@ export interface UserBottleLogEntry extends UserLogEntry {
   object: BottleRecord['id']
 }
 
+export interface UserBottleLogEntryPopulated extends UserBottleLogEntry {
+  bottle: BottleRecord
+}
+
 export interface Bottle extends BottleRecord {
   type: Type['name'];
 }
@@ -76,4 +80,13 @@ export interface UserCocktailLogEntry extends UserLogEntry {
   object: CocktailRecord['id']
 }
 
-export type LogEntry = AppInitLogEntry | UserBottleLogEntry | UserCocktailLogEntry;
+export interface UserCocktailLogEntryPopulated extends UserCocktailLogEntry {
+  cocktail: CocktailRecord
+}
+
+export type LogEntry =
+  AppInitLogEntry
+  | UserBottleLogEntry
+  | UserBottleLogEntryPopulated
+  | UserCocktailLogEntry
+  | UserCocktailLogEntryPopulated;
