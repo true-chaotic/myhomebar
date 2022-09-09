@@ -25,7 +25,7 @@ it('add Lemonade to the page', () => {
   cy.contains('Logs').click()
     .invoke('attr', 'aria-selected')
     .should('eq', 'true');
-  cy.contains('User added a cocktail named Lemonade');
+  cy.contains(`User added a cocktail named ${cocktailName}`);
 });
 
 it('add Lemon juice to the page', () => {
@@ -52,9 +52,8 @@ it('add Lemon juice to the page', () => {
   cy.contains('Logs').click()
     .invoke('attr', 'aria-selected')
     .should('eq', 'true');
-  cy.contains('User added a bottle named Lemon juice');
+  cy.contains(`User added a bottle named ${bottleName}`);
 });
-
 
 it('changing the volume of the bottle', () => {
   cy.visit('/');
