@@ -99,3 +99,41 @@ it('changing the volume of the bottle', () => {
   cy.get('@current').type('4000');
   cy.get('@current').should('have.value', '750');
 });
+
+// cocktails name display in logs
+
+it('add name to logs', () => {
+  cy.visit('/');
+  cy.contains('Cocktails')
+    .invoke('attr', 'aria-selected')
+    .should('eq', 'true');
+
+  cy.get('[data-cy="add-cocktail-button"]').click();
+  cy.get('#name').type('Lemonade');
+  cy.get('form').submit();
+  cy.contains('Lemonade');
+
+  cy.contains('Logs').click()
+    .invoke('attr', 'aria-selected')
+    .should('eq', 'true');
+  cy.contains('User added a cocktail named Lemonade');
+
+  // bottle name display in logs
+  cy.visit('/');
+  cy.contains('Bottles').click()
+    .invoke('attr', 'aria-selected')
+    .should('eq', 'true');
+
+  cy.get('[data-cy="add-bottle-button"]').click();
+
+  cy.get('#name').type('Lemon juice');
+  cy.get('form').submit();
+
+  cy.contains('Add new bottle').should('not.exist');
+  cy.contains('Lemon juice');
+
+  cy.contains('Logs').click()
+    .invoke('attr', 'aria-selected')
+    .should('eq', 'true');
+  cy.contains('User added a bottle named Lemon juice');
+});
