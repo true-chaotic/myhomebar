@@ -109,6 +109,8 @@ export default function useBottlePrompt(): PopupAndResultPromise {
               inputProps={{
                 name: 'total-volume',
                 id: 'total-volume',
+                // @ts-ignore
+                'data-cy': 'total-volume',
               }}
             >
               <option value={1000}>1000 ml</option>
@@ -124,7 +126,7 @@ export default function useBottlePrompt(): PopupAndResultPromise {
             fullWidth
             variant="standard"
             value={currentVolume}
-            inputProps={{ inputMode: 'numeric', name: 'current-volume' }}
+            inputProps={{ inputMode: 'numeric', name: 'current-volume', 'data-cy': 'current-volume' }}
             onChange={({ target: { value } }) => {
               const filteredValue = value.replace(/[^0-9]/gi, '');
               const validValue = filteredValue === '' ? 0 : Math.min(totalVolume, Number(filteredValue));
