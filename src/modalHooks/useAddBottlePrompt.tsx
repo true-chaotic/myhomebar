@@ -109,8 +109,6 @@ export default function useBottlePrompt(): PopupAndResultPromise {
               inputProps={{
                 name: 'total-volume',
                 id: 'total-volume',
-                // inputProps in NativeSelect do not accept data-attributes
-                // @ts-ignore
                 'data-cy': 'total-volume',
               }}
             >

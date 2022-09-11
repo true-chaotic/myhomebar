@@ -1,5 +1,11 @@
 import { Initiator, AppAction, UserAction } from './consts';
 
+declare module 'react' {
+  interface HTMLAttributes<T> extends AriaAttributes, DOMAttributes<T> {
+    'data-cy'?: string;
+  }
+}
+
 export interface Type {
   id: string;
   name: string;
