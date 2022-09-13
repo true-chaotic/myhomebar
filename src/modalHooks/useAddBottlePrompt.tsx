@@ -18,9 +18,11 @@ export default function useBottlePrompt(): PopupAndResultPromise {
     setHandleClose(() => (bottle: Result) => {
       resolve(bottle);
 
-      setHandleClose(undefined);
+      if (bottle) {
+        setFormResetKey(formResetKey + 1);
+      }
 
-      setFormResetKey(formResetKey + 1);
+      setHandleClose(undefined);
     });
   });
 
