@@ -123,7 +123,7 @@ it('close the form', () => {
   cy.get('[data-cy="add-bottle-button"]').click();
 
   cy.get('[data-cy="bottle-name"]').type('Lemon juice');
-  cy.get('[name = "typeId"]').type('Orange liquor');
+  cy.get('[name="typeId"]').select('Orange liquor');
   cy.get('[data-cy="total-volume"]').select('500').should('have.value', '500');
   cy.get('[data-cy="current-volume"]').should('have.value', '500');
 
@@ -132,7 +132,7 @@ it('close the form', () => {
   cy.get('[data-cy="add-bottle-button"]').click();
 
   cy.get('[data-cy="bottle-name"]').should('have.value', 'Lemon juice');
-  cy.get('[name = "typeId"]').type('Orange liquor');
+  cy.get('[name="typeId"]').should('have.value', 'orange-liquor');
   cy.get('[data-cy="total-volume"]').should('have.value', '500');
   cy.get('[data-cy="current-volume"]').should('have.value', '500');
 
@@ -163,13 +163,13 @@ it('close the form', () => {
   cy.get('[data-cy="bottle-name"]').type('Lemon juice');
   cy.get('[data-cy="total-volume"]').select('500').should('have.value', '500');
   cy.get('[data-cy="current-volume"]').should('have.value', '500');
-  cy.get('[name = "typeId"]').type('Orange liquor');
+  cy.get('[name="typeId"]').select('Orange liquor');
   cy.get('form').submit();
 
   cy.get('[data-cy="add-bottle-button"]').click();
 
   cy.get('[data-cy="bottle-name"]').should('have.value', '');
-  cy.get('[name = "typeId"]').type('Coffee liquor');
+  cy.get('[name="typeId"]').should('have.value', 'coffee-liquor');
   cy.get('[data-cy="total-volume"]').should('have.value', '750');
   cy.get('[data-cy="current-volume"]').should('have.value', '750');
 });
