@@ -1,15 +1,7 @@
 import * as React from 'react';
 import { useState, useCallback } from 'react';
-import Button from '@mui/material/Button';
-import TextField from '@mui/material/TextField';
-import Dialog from '@mui/material/Dialog';
-import DialogActions from '@mui/material/DialogActions';
-import DialogContent from '@mui/material/DialogContent';
-import DialogTitle from '@mui/material/DialogTitle';
-import { COFFEE_LIQUOR, IRISH_CREAM, ORANGE_LIQUOR } from '../presets/types';
-import { NewCocktailRecord } from '../types';
+import CocktailModal, { Result } from '../components/CocktailModal';
 
-type Result = NewCocktailRecord | null;
 type PopupAndResultPromise = [JSX.Element, () => Promise<Result>];
 
 export default function useAddCocktailPrompt(): PopupAndResultPromise {
@@ -17,15 +9,17 @@ export default function useAddCocktailPrompt(): PopupAndResultPromise {
     handleClose,
     setHandleClose,
   ] = useState<((cocktail: Result) => void) | undefined>(undefined);
-
-  const [cocktailName, setCocktailName] = useState<string>('');
+  const [
+    formResetKey,
+    setFormResetKey,
+  ] = useState<number>(0);
 
   const formPrompt = () => new Promise<Result>((resolve) => {
     setHandleClose(() => (cocktail: Result) => {
       resolve(cocktail);
 
       if (cocktail) {
-        setCocktailName('');
+        setFormResetKey(formResetKey + 1);
       }
 
       setHandleClose(undefined);
@@ -39,45 +33,11 @@ export default function useAddCocktailPrompt(): PopupAndResultPromise {
   }, [handleClose]);
 
   const popup = (
-    <Dialog open={Boolean(handleClose)} onClose={() => setResult(null)}>
-      <form onSubmit={(event) => {
-        event.preventDefault();
-
-        setResult({
-          name: cocktailName,
-          ingredients: [{
-            typeId: COFFEE_LIQUOR,
-            amount: 20,
-          }, {
-            typeId: IRISH_CREAM,
-            amount: 20,
-          }, {
-            typeId: ORANGE_LIQUOR,
-            amount: 20,
-          }],
-        });
-      }}
-      >
-        <DialogTitle>Add new cocktail</DialogTitle>
-        <DialogContent>
-          <TextField
-            autoFocus
-            margin="dense"
-            id="name"
-            label="Cocktail name"
-            fullWidth
-            variant="standard"
-            value={cocktailName}
-            inputProps={{ inputMode: 'text', name: 'cocktail-name', 'data-cy': 'cocktail-name' }}
-            onChange={(event) => { setCocktailName(event.target.value); }}
-          />
-        </DialogContent>
-        <DialogActions>
-          <Button data-cy="cancel-button-cocktail" type="button" onClick={() => setResult(null)}>Cancel</Button>
-          <Button type="submit">Add</Button>
-        </DialogActions>
-      </form>
-    </Dialog>
+    <CocktailModal
+      key={`cocktail-modal-${formResetKey})`}
+      open={Boolean(handleClose)}
+      setResult={setResult}
+    />
   );
 
   return [popup, formPrompt];

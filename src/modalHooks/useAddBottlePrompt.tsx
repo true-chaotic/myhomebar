@@ -34,7 +34,7 @@ export default function useBottlePrompt(): PopupAndResultPromise {
 
   const popup = (
     <BottleModal
-      key={String(formResetKey)}
+      key={`bottle-modal-${formResetKey}`}
       open={Boolean(handleClose)}
       setResult={setResult}
     />
